@@ -24,7 +24,7 @@ if strcmp(transition.name, 'tDecision1')
             fire = 0;
             return
         end;
-        colors = get_color(tokTurn);
+        colors = get_color('pTurn1', tokTurn);
         %colors = {'0','-1','-1','-1'};
         %colors{1} = '0';
         colors = '0';
@@ -45,6 +45,7 @@ elseif strcmp(transition.name, 'tDecision2')
             fire = 0;
             return
         end;
+        colors = get_color('pTurn2', tokTurn);
 
         %colors = {'0','-1','-1','-1'};
         %colors{2} = '0';
@@ -64,7 +65,7 @@ elseif strcmp(transition.name, 'tDecision3')
             fire = 0;
             return
         end;
-        colors = get_color(tokTurn);
+        colors = get_color('pTurn3', tokTurn);
         %colors = {'0','-1','-1','-1'};
         %colors{3} = '0';
         colors = '0';
@@ -83,7 +84,7 @@ elseif strcmp(transition.name, 'tDecision4')
             fire = 0;
             return
         end;        
-        colors = get_color(tokTurn);
+        colors = get_color('pTurn4', tokTurn);
         %colors = {'0','-1','-1','-1'};
         %colors{4} = '0';
         colors = '0';
