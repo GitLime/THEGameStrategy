@@ -2,6 +2,7 @@ function [fire, transition] = COMMON_PRE(transition)
 
 global global_info;
 
+%Set player id to cards the dealers is dealing
 if strcmp(transition.name, 'tDealer_cards'),
  index = mod(global_info.players_index, length(global_info.players))+1;
  global_info.players_index = global_info.players_index + 1;
@@ -13,7 +14,12 @@ end;
 
 %Initial state =  {-1,-1,-1,-1}
 %State is the current player pot, if all over 0 and equal, round end.
+%Player 1 decision
 if strcmp(transition.name, 'tDecision1')
+    if global_info.start_round == 0,
+        fire = 0;
+        return
+    end;
     tokTurn = tokenColorless('pTurn1',1);
     if tokTurn ~= 0
         %transition.new_color = {'0','-1','-1','-1'};
@@ -34,13 +40,13 @@ if strcmp(transition.name, 'tDecision1')
     
     fire = 1;
     return;
+%Player 2 decision
 elseif strcmp(transition.name, 'tDecision2')
     tokTurn = tokenColorless('pTurn2',1);
     if tokTurn ~= 0
-        dist('OMG!')
         transition.new_color = {'-1','0','-1','-1'};
     else
-        tokTurn = tokenAny('pTurn2',1)
+        tokTurn = tokenAny('pTurn2',1);
         if tokTurn == 0
             fire = 0;
             return
@@ -55,6 +61,7 @@ elseif strcmp(transition.name, 'tDecision2')
     end;
     fire = 1;
     return;
+%Player 3 decision
 elseif strcmp(transition.name, 'tDecision3')
     tokTurn = tokenColorless('pTurn3',1);
     if tokTurn ~= 0
@@ -74,6 +81,7 @@ elseif strcmp(transition.name, 'tDecision3')
     end;
     fire = 1;
     return;
+%Player 4 decision
 elseif strcmp(transition.name, 'tDecision4')
     tokTurn = tokenColorless('pTurn4',1);
     if tokTurn ~= 0
@@ -97,6 +105,9 @@ else
     % not possible
 end;
 
+
+
+%Dealer deals cards with correct player id to players
 if strcmp(transition.name, 'tP1'),
  tokID1 = tokenAnyColor('pTable',2,{'pp1'});
 elseif strcmp(transition.name, 'tP2'),
@@ -111,3 +122,4 @@ end;
 
 transition.selected_tokens = tokID1;
 fire = (tokID1);
+    
