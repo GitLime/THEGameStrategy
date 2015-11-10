@@ -10,7 +10,7 @@ global_info.card_dealt_counter = 4;
 global_info.start_round = 0;
 
 global_info.end_hand = 0;
-%global_info.player_decision_states = {''}
+global_info.player_bets = {'0','0','0','0'};
 
 player_modules = {'dealer_pdf', 'table_pdf', 'smpl_player_pdf', 'smpl_player_pdf', 'smpl_player_pdf', 'smpl_player_pdf'};
 pdfs = {'THE_module_pdf'};

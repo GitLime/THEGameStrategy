@@ -49,7 +49,21 @@ end
 
 %Decision/turn from player to table
 for player_nr = 1:global_info.n_players
+    disp(global_info.player_bets)
+    disp(global_info.end_hand)
     if strcmp(transition.name, strcat('tTableP', num2str(player_nr), 'In'))
+        if strcmp(global_info.player_bets(player_nr), '-1')
+            fire = 1;
+            return
+        else
+            pTurnOut = strcat('pP', num2str(player_nr), 'TurnOut');
+            tokID = tokenAny( pTurnOut,1 );
+            color = get_color(pTurnOut,tokID);
+            if strcmp(color, global_info.player_bets(player_nr))
+                global_info.player_bets(player_nr) = color;
+                global_info.end_hand = 1;
+            end
+        end
         fire = 1;
         return;
     end
@@ -70,7 +84,15 @@ if strcmp(transition.name, 'tDealer')
     tokID1 = tokenAny('pDeck', 1);
 end
 
-%disp(transition.name)
+%Player decision
+for player_nr = 1:global_info.n_players
+    if strcmp(transition.name, strcat('tP', num2str(player_nr), 'Decision')),
+        color = strategy_smpl('100',player_nr);
+        transition.new_color = color;
+        fire = 1;
+        return
+    end
+end
 
 transition.selected_tokens = tokID1;
 fire = (tokID1);
