@@ -2,11 +2,9 @@ clear all; clc;
 
 global global_info;
 
-global_info.print_text = 1;
 global_info.players = {'p1','p2','p3','p4'};
 global_info.players_index = 0;
 global_info.n_players = 4;
-global_info.card_dealt_counter = 4;
 
 global_info.end_hand = 0;
 %global_info.player_decision_states = {''}
@@ -17,7 +15,7 @@ pdfs = [player_modules pdfs];
 
 pns = pnstruct(pdfs);
 
-dyn.m0  = {'pDealer',8, 'pP1Turn',1};
+dyn.m0  = {'pDealer',8, 'pTurn1',1};
 
 prnsys(pns, dyn);
 
