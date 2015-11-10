@@ -7,6 +7,7 @@ global_info.players = {'p1','p2','p3','p4'};
 global_info.players_index = 0;
 global_info.n_players = 4;
 global_info.card_dealt_counter = 4;
+global_info.start_round = 0;
 
 global_info.end_hand = 0;
 %global_info.player_decision_states = {''}
@@ -18,10 +19,8 @@ pdfs = [player_modules pdfs];
 
 pns = pnstruct(pdfs);
 
-
-
-%dyn.m0  = {'pDealer',8, 'pP1Turn',1};
-dyn.m0  = {'pTableP1Out',1};
+dyn.m0  = {'pDeck',8, 'pTableP1Out',1};
+%dyn.m0  = {'pTableP1Out',1};
 
 prnsys(pns, dyn);
 
