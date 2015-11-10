@@ -17,7 +17,7 @@ pdfs = [player_modules pdfs];
 
 pns = pnstruct(pdfs);
 
-dyn.m0  = {'pDealer',8, 'pP1Turn',1};
+dyn.m0  = {'pDealer',8, 'pTableP4Out',1};
 
 prnsys(pns, dyn);
 

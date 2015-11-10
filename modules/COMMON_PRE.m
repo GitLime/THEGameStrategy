@@ -13,9 +13,10 @@ end;
 
 %Initial state =  {-1,-1,-1,-1}
 %State is the current player pot, if all over 0 and equal, round end.
+%Player turn Decision to tTabIn
 for player_nr = 1:global_info.n_players
-    if strcmp(transition.name, strcat('tP', num2str(player_nr), 'Decision'))
-        tTurn = strcat('pP', num2str(player_nr), 'Turn');
+    if strcmp(transition.name, strcat('tP', num2str(player_nr), 'TurnIn'))
+        tTurn = strcat('pTableP', mod(num2str(player_nr+1),global_info.n_players), 'Out');
         tokTurn = tokenColorless(tTurn, 1);
         if tokTurn ~= 0
             %transition.new_color = {'0','-1','-1','-1'};
@@ -39,7 +40,16 @@ for player_nr = 1:global_info.n_players
     end
 end
 
+%Decision/turn from player to table
+for player_nr = 1:global_info.n_players
+    if strcmp(transition.name, strcat('tTableP', num2str(player_nr), 'In'))
+        fire = 1;
+        return;
+    end
+end
 
+
+%Cards from PDealerOut to players
 for player_nr = 1:global_info.n_players
     if strcmp(transition.name, strcat('tP', num2str(player_nr), 'In')),
         tokID1 = tokenAnyColor('pTable',2,{strcat('pp', num2str(player_nr))});
