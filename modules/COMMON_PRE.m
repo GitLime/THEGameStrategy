@@ -5,11 +5,35 @@ global global_info;
 %theprint(transition.name);
 
 if strcmp(transition.name, 'tDealer'),
- index = mod(global_info.players_index, length(global_info.players))+1;
- global_info.players_index = global_info.players_index + 1;
+ if and(global_info.game_state == 1, global_info.cards_dealt_in_state(1))
+     global_info.cards_dealt_in_state(global_info.game_state) = global_info.cards_dealt_in_state(global_info.game_state) -1;
+     index = mod(global_info.players_index, length(global_info.players))+1;
+     global_info.players_index = global_info.players_index + 1;
 
- transition.new_color = strcat('p',global_info.players(index));
- fire = 1;
+     transition.new_color = strcat('p',global_info.players(index));
+     fire = 1;
+     return;
+ elseif and(global_info.game_state == 2,global_info.cards_dealt_in_state(2))
+     disp('Dealing card to flop')
+     global_info.cards_dealt_in_state(global_info.game_state) = global_info.cards_dealt_in_state(global_info.game_state) -1;
+     fire = 1;
+     return;
+ elseif and(global_info.game_state == 3,global_info.cards_dealt_in_state(3))
+     disp('Dealing turn card')
+     global_info.cards_dealt_in_state(global_info.game_state) = global_info.cards_dealt_in_state(global_info.game_state) -1;
+     fire = 1;
+     return;
+ elseif and(global_info.game_state == 4,global_info.cards_dealt_in_state(4))
+     disp('Dealing river card')
+     global_info.cards_dealt_in_state(global_info.game_state) = global_info.cards_dealt_in_state(global_info.game_state) -1;
+     if global_info.cards_dealt_in_state(global_info.game_state) == 0
+        global_info.start_round = 1;
+     end;
+     fire = 1;
+     return;
+ end;
+ global_info.start_round = 1;
+ fire = 0;
  return;
 end;
 
@@ -49,8 +73,6 @@ end
 
 %Decision/turn from player to table
 for player_nr = 1:global_info.n_players
-    disp(global_info.player_bets)
-    disp(global_info.end_hand)
     if strcmp(transition.name, strcat('tTableP', num2str(player_nr), 'In'))
         if strcmp(global_info.player_bets(player_nr), '-1')
             fire = 1;
@@ -59,9 +81,17 @@ for player_nr = 1:global_info.n_players
             pTurnOut = strcat('pP', num2str(player_nr), 'TurnOut');
             tokID = tokenAny( pTurnOut,1 );
             color = get_color(pTurnOut,tokID);
-            if strcmp(color, global_info.player_bets(player_nr))
-                global_info.player_bets(player_nr) = color;
-                global_info.end_hand = 1;
+
+            if and(strcmp(color, num2str(global_info.player_bets(player_nr))),(global_info.player_bets(player_nr) > global_info.last_rounds_bet))
+                global_info.player_bets(player_nr) = str2double(color);
+                global_info.start_round = 0;
+                global_info.last_rounds_bet = num2str(global_info.player_bets(player_nr));
+                %global_info.player_bets = [0,0,0,0];
+                global_info.game_state = mod(global_info.game_state,length(global_info.cards_dealt_in_state))+1;
+                disp(strcat('Game stage: ',num2str(global_info.game_state)));
+                global_info.card_dealt_counter = global_info.cards_dealt_in_state(global_info.game_state);
+            else
+                global_info.player_bets(player_nr) = str2double(color);
             end
         end
         fire = 1;
@@ -87,8 +117,10 @@ end
 %Player decision
 for player_nr = 1:global_info.n_players
     if strcmp(transition.name, strcat('tP', num2str(player_nr), 'Decision')),
-        color = strategy_smpl('100',player_nr);
-        transition.new_color = color;
+        color = strategy_smpl(200,player_nr);
+        
+        transition.override = 1;
+        transition.new_color = num2str(color);
         fire = 1;
         return
     end
