@@ -18,4 +18,4 @@ end
 % cards = {'8s' '2s' 'ts' '9d' '5s' 'ad' 'ad'};
 % evaluate_hand(cards)
 
- evaluate(hands, table)
+ find_winners(hands, table)
