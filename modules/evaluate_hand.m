@@ -83,7 +83,7 @@ function [ output ] = evaluate_hand( cards )
         output.value = 7;
         is_other = value_frquency < 4;
         other_values = value_frquency(1,is_other(2,:));
-        output.hand = [foak_value max(other_values)];
+        output.hand = [foak_value foak_value foak_value foak_value other_values(1)];
         return;
     end 
     
@@ -99,7 +99,7 @@ function [ output ] = evaluate_hand( cards )
             pair_i = pair_i(1);
             %has house
             output.value = 6;
-            output.hand = [toak_value other_values(1, pair_i)];
+            output.hand = [toak_value toak_value toak_value other_values(1, pair_i) other_values(1, pair_i)];
             return;
         end
     end
@@ -134,7 +134,7 @@ function [ output ] = evaluate_hand( cards )
         is_other = value_frquency(1,:) ~= toak_value;
         other_values = value_frquency(:,is_other);
         output.value = 3;
-        output.hand = [toak_value other_values(1,1:2)];
+        output.hand = [toak_value toak_value toak_value other_values(1,1:2)];
         return;
    end
    
@@ -146,7 +146,7 @@ function [ output ] = evaluate_hand( cards )
         other_values = other_values(other_values ~= pair_value(1));
         other_values = other_values(other_values ~= pair_value(2));
         output.value = 2;
-        output.hand = [pair_value(1) pair_value(2) other_values(1)];
+        output.hand = [pair_value(1) pair_value(1) pair_value(2)  pair_value(2) other_values(1)];
         return;
    end
    
@@ -157,7 +157,7 @@ function [ output ] = evaluate_hand( cards )
        other_values = value_frquency(1,:);
        other_values = other_values(other_values ~= pair_value(1));
        output.value = 1;
-       output.hand = [pair_value other_values(1,1:3)];
+       output.hand = [pair_value pair_value other_values(1,1:3)];
        return;
    end
    
