@@ -79,12 +79,17 @@ for player_nr = 1:global_info.n_players
                 global_info.player_bets(player_nr) = str2double(color);
                 global_info.start_round = 0;
                 global_info.last_rounds_bet = num2str(global_info.player_bets(player_nr));
-                %global_info.player_bets = [0,0,0,0];
                 global_info.game_state = mod(global_info.game_state,length(global_info.cards_dealt_in_state))+1;
                 disp(strcat('Game stage: ',num2str(global_info.game_state)));
                 %global_info.card_dealt_counter = global_info.cards_dealt_in_state(global_info.game_state);
                 if global_info.game_state == 1
                     theprint('#########ENDING HAND#########')
+                    global_info.player_bets = [0,0,0,0];
+                    global_info.cards_dealt_in_state = [8,3,1,1];
+                    global_info.cards_dealt_to_table = [0,3,1,1];
+                    global_info.card_dealt_counter = 4;
+                    global_info.small_blind_player = mod(global_info.small_blind_player,4)+1;
+                    global_info.cards_returned = 0;
                     global_info.end_hand = 1;
                 end;
             else
@@ -129,7 +134,7 @@ end
 for player_nr = 1:global_info.n_players
     if strcmp(transition.name, strcat('tP', num2str(player_nr), 'CardOut')),
         if global_info.end_hand
-            %theprint('Sending card from player')
+            theprint('Sending card from player')
             fire = 1;
             return
         end;
@@ -141,7 +146,7 @@ end;
 %tTableCardOut
 if strcmp(transition.name, 'tTableCardOut'),
     if global_info.end_hand
-        %theprint('Sending card from table')
+        theprint('Sending card from table')
         fire = 1;
         return
     end;
@@ -150,20 +155,19 @@ if strcmp(transition.name, 'tTableCardOut'),
 end;
 
 %Cards from player or table to deck
-if strcmp(transition.name, 'tDealerCardIn'),
-    theprint('Sending card back to dealer')
+if strcmp(transition.name, 'tToDeck'),
+    theprint('Sending card back to deck')
     fire = 1;
     return;
 end;
 
 %Cards from player to deck
 if strcmp(transition.name, 'tTableIn'),
-    if and(global_info.game_state > 1, global_info.cards_dealt_in_state(global_info.game_state))
+    if and(global_info.game_state > 1, global_info.cards_dealt_to_table(global_info.game_state) > 0)
+        global_info.cards_dealt_to_table(global_info.game_state) = global_info.cards_dealt_to_table(global_info.game_state) -1;
+        theprint('Putting card on table');
         fire = 1;
         return;
-    elseif and(global_info.game_state > 1, ~global_info.start_round)
-        theprint('###########Starting new round#########');
-        global_info.start_round = 1;
     end;
     fire = 0;
     return;

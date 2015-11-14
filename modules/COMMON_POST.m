@@ -13,4 +13,16 @@ function [] = COMMON_POST(transition)
                 end;
         end;
     end;
+    if strcmp(transition.name, 'tTableIn'),
+        if and(global_info.game_state > 1, ~global_info.cards_dealt_to_table(global_info.game_state))
+            theprint('###########Starting new round#########');
+            global_info.start_round = 1;
+        end;
+    end;
+    if strcmp(transition.name, 'tToDeck')
+        global_info.cards_returned = global_info.cards_returned + 1;
+        if global_info.cards_returned == 13
+            global_info.end_hand = 0;
+        end;
+    end;
     
