@@ -17,7 +17,7 @@ function [ output ] = evaluate_hand( cards )
     
     ccards = char(cards);
     ccard_values = ccards(:,1);
-    card_values = zeros(1,7);
+    card_values = zeros(1,length(cards));
 
     for i = 1:length(ccard_values)
         cval = ccard_values(i);

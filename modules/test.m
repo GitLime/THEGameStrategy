@@ -1,2 +1,4 @@
-x = [0 2 0; 2 2 1; 2 7 1]
-sort(x,'descend');
+hand = {'7k', 'as'};
+table = {'ks','js','qs','ts'};
+
+smpl_hand_strength(hand, table)
