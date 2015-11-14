@@ -20,7 +20,9 @@ for i = 1:n_players
          strcat('pTableP', num2str(player), 'Out'),...
          strcat('tP', num2str(player), 'TurnIn'), 1,... %table to player
          strcat('pP', num2str(player), 'TurnOut'),...
-         strcat('tTableP', num2str(player), 'In'), 1};...%player to table; 
+         strcat('tTableP', num2str(player), 'In'), 1,... %player to table 
+         strcat('pP', num2str(player),'CardOut'), 'tDealerCardIn', 1,... %player to Dealer/ Deck
+         'pDealerOut','tTableIn', 1, 'pTableCardOut', 'tDealerCardIn', 1};...%dealer to table
     pns.set_of_As = [pns.set_of_As As];
 end
 

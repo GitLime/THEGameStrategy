@@ -3,21 +3,23 @@ clear all; clc;
 global global_info;
 
 global_info.print_text = 1;
-global_info.players = {'p1','p2','p3','p4'};
+global_info.players = {'p1','p2', 'p3','p4'};
 global_info.players_index = 0;
-global_info.n_players = 4;
-
+global_info.n_players = length(global_info.players);
 
 %Between rounds
 global_info.start_round = 0;
 global_info.game_state = 1; % 1: deal cards, 2: flop, 3: turn, 4: river
 global_info.last_rounds_bet = 0;
+global_info.nr_of_turns_in_round = 0;
 %Between hands
 global_info.end_hand = 0;
-global_info.small_blind_player = 4;
+global_info.small_blind_player = 1;
 global_info.player_bets = [0,0,0,0];
 global_info.cards_dealt_in_state = [8,3,1,1];
 global_info.card_dealt_counter = 4;
+
+global_info.MAX_LOOP = 500;
 
 player_modules = {'dealer_pdf', 'table_pdf', 'smpl_player_pdf', 'smpl_player_pdf', 'smpl_player_pdf', 'smpl_player_pdf'};
 pdfs = {'THE_module_pdf'};
