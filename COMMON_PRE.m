@@ -100,6 +100,8 @@ elseif strcmp(transition.name, 'tDecision4')
         transition.override = 1;
     end;
     fire = 1;
+    %pPlayer1Cards: for holding two cards
+    %pPlayer1Turn: for holding the turn token
     return;
 else
     % not possible
