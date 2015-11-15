@@ -93,6 +93,31 @@ for player_nr = 1:global_info.n_players
                     global_info.end_hand = 1;
                 end;
             else
+                % color >= player_chips     --> all-in
+                % else
+                
+                min_bet = global_info.blinds(2);
+                call_amount = max(global_info.player_bets);
+                play = global_info.player_bets(player_nr);
+                
+                if call_amount == 0 % can check, or bet
+                    if color < min_bet; 
+                        play = 0;  %CHECK
+                    else; 
+                        play = color; end %BET
+                else %can fold, call, or raise
+                    if color < call; %FOLD
+                        global_info.has_folded(player_nr) = 1; 
+                    elseif color < call_amount + min_raise; %CALL
+                        play = call_amount;
+                    else %RAISE
+                        play = color;
+                        min_raise = play - call_amount;
+                    end
+                end
+                
+                
+                
                 global_info.player_bets(player_nr) = str2double(color);
                 global_info.nr_of_turns_in_round = global_info.nr_of_turns_in_round + 1;
             end
@@ -120,9 +145,13 @@ end
 %Player decision
 for player_nr = 1:global_info.n_players
     if strcmp(transition.name, strcat('tP', num2str(player_nr), 'Decision')),
-        theprint(['Player ', num2str(player_nr), ' decision']); 
-        color = strategy_smpl(200,player_nr);
+        theprint(['Player ', num2str(player_nr), ' decision']);
         
+        hand = get_place(strcat('pP', num2str(player_nr), 'Cards'));
+        col = hand.token_bank.color;
+        col(1)
+        
+        color = global_info.players(player_nr).decision();
         transition.override = 1;
         transition.new_color = num2str(color);
         fire = 1;

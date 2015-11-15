@@ -6,12 +6,15 @@ global_info.print_text = 1;
 global_info.players = [basic_player(), basic_player(), basic_player(), basic_player()];
 global_info.players_index = 0;
 global_info.n_players = length(global_info.players);
+global_info.blinds = [10 20];
 
 %Between rounds
 global_info.start_round = 0;
 global_info.game_state = 1; % 1: deal cards, 2: flop, 3: turn, 4: river
 global_info.last_rounds_bet = 0;
 global_info.nr_of_turns_in_round = 0;
+global_info.min_raise = 0;
+%global_info.has_folded = zeros(1, global_info.n_players);
 %Between hands
 global_info.end_hand = 0;
 global_info.small_blind_player = 1;

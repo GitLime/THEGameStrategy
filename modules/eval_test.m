@@ -1,4 +1,4 @@
-hand = {'7k', '2s'};
+hand = {'7k', '7s'};
 table = {'3s','7s','as'};
-cards = [hand table];
-evaluate_hand(cards)
+table = {};
+basic_decision(hand, table)
