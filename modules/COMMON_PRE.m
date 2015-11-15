@@ -11,7 +11,7 @@ if strcmp(transition.name, 'tDealer'),
          global_info.cards_dealt_in_state(global_info.game_state) = global_info.cards_dealt_in_state(global_info.game_state) -1;
          index = mod(global_info.players_index, length(global_info.players))+1;
          global_info.players_index = global_info.players_index + 1;
-         transition.new_color = strcat('p',global_info.players(index));
+         transition.new_color = strcat('pp',num2str(index));
          fire = 1;
          return;
       elseif and(global_info.game_state > 1, global_info.cards_dealt_in_state(global_info.game_state))
