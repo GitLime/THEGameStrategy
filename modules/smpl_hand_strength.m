@@ -1,7 +1,7 @@
 function strength = smpl_hand_strength(hand, table)
 if isempty(table)
     ccards = char(hand);
-    ccard_values = ccards(:,1);
+    ccard_values = ccards(:,2);
     card_values = zeros(1,2);
     
     for i = 1:length(ccard_values)
@@ -35,7 +35,7 @@ if isempty(table)
         6	7	7	8	8	9	9	11	12	13	14	28	18; ...
         8	9	9	10	9	10	11	12	13	14	15	16	32;];
     
-    card_colors = ccards(:,2);
+    card_colors = ccards(:,3);
     if card_colors(1) == card_colors(2);
         strength = twoCardValues(min(card_values) - 1, max(card_values) - 1);
         return

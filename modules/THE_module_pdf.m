@@ -16,7 +16,7 @@ n_players = global_info.n_players;
 for i = 1:n_players
     player = i;
     
-    As = {'pDealerOut', strcat('tP', num2str(player), 'In'),2,... %dealer to player
+    As = {'pDealerOut', strcat('tP', num2str(player), 'In'),1,... %dealer to player
          strcat('pTableP', num2str(player), 'Out'),...
          strcat('tP', num2str(player), 'TurnIn'), 1,... %table to player
          strcat('pP', num2str(player), 'TurnOut'),...

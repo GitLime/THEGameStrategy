@@ -6,7 +6,7 @@ global_info.print_text = 1;
 global_info.players = [basic_player(), basic_player(), basic_player(), basic_player()];
 global_info.players_index = 0;
 global_info.n_players = length(global_info.players);
-global_info.blinds = [10 20];
+global_info.blinds = [1 2];
 
 %Between rounds
 global_info.start_round = 0;
@@ -20,23 +20,24 @@ global_info.end_hand = 0;
 global_info.small_blind_player = 1;
 global_info.player_bets = zeros(1, global_info.n_players);
 global_info.cards_dealt_in_state = [8,3,1,1];
-global_info.card_dealt_counter = global_info.n_players;
+global_info.card_dealt_counter = global_info.n_players * 2;
 global_info.cards_dealt_to_table = [0,3,1,1];
 global_info.cards_returned = 0;
+global_info.pot = 0;
 
 global_info.MAX_LOOP = 200;
 global_info.deck = {};
 global_info.cards_set_counter = 1;
 
 types = {'s','k','h','d'};
-values = {'a','2','3','4','5','6','7','8','9','10','j','q','k'};
+values = {'a','2','3','4','5','6','7','8','9','t','j','q','k'};
 for i = 1:4
     for j = 1:13
         card = strcat('c',values(j),types(i));
-        %global_info.deck = [global_info.deck, card];
         global_info.deck = [global_info.deck, card];
     end;
 end;
+global_info.deck = global_info.deck(randperm(52));
 
 player_modules = {'dealer_pdf', 'table_pdf', global_info.players(1).pdf,...
     global_info.players(2).pdf, global_info.players(3).pdf, global_info.players(4).pdf,};

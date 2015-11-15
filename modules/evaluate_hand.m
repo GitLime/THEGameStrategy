@@ -16,7 +16,7 @@ function [ output ] = evaluate_hand( cards )
     colors = {'s', 'h', 'd', 'k'};
     
     ccards = char(cards);
-    ccard_values = ccards(:,1);
+    ccard_values = ccards(:,2);
     card_values = zeros(1,length(cards));
 
     for i = 1:length(ccard_values)
@@ -37,7 +37,7 @@ function [ output ] = evaluate_hand( cards )
     end
     
     %test for flush
-    card_colors = ccards(:,2);
+    card_colors = ccards(:,3);
     has_flush = 0;
     for color = colors
         color = char(color);
