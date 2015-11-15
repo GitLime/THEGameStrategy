@@ -18,6 +18,8 @@ global_info.small_blind_player = 1;
 global_info.player_bets = zeros(1, global_info.n_players);
 global_info.cards_dealt_in_state = [8,3,1,1];
 global_info.card_dealt_counter = global_info.n_players;
+global_info.cards_dealt_to_table = [0,3,1,1];
+global_info.cards_returned = 0;
 
 global_info.MAX_LOOP = 500;
 player_modules = {'dealer_pdf', 'table_pdf', global_info.players(1).pdf,...
@@ -29,7 +31,7 @@ pdfs = [player_modules pdfs];
 
 pns = pnstruct(pdfs);
 
-dyn.m0  = {'pDeck',13, strcat('pTableP',num2str(global_info.small_blind_player),'Out'),1};
+dyn.m0  = {'pDeck',52, strcat('pTableP',num2str(global_info.small_blind_player),'Out'),1};
 %strcat('pTableP',num2str(small_blind_player),'Out')
 %dyn.m0  = {'pTableP1Out',1};
 
@@ -40,3 +42,4 @@ pni = initialdynamics(pns, dyn);
 sim = gpensim(pni); % perform simulation runs
 
 prnss(sim); % print the simulation results
+plotp(sim, {'pDeck'});
