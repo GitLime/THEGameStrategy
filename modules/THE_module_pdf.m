@@ -10,7 +10,7 @@ pns.PN_name = 'Texas Hold Em';
 
 pns.set_of_As = {};
 pns.set_of_Ps = {};
-pns.set_of_Ts = {};
+pns.set_of_Ts = {'tMakeCards'};
 
 n_players = global_info.n_players;
 for i = 1:n_players
@@ -22,7 +22,8 @@ for i = 1:n_players
          strcat('pP', num2str(player), 'TurnOut'),...
          strcat('tTableP', num2str(player), 'In'), 1,... %player to table 
          strcat('tP', num2str(player),'CardOut'), 'pDealerCardIn', 1,... %player to Dealer/ Deck
-         'pDealerOut','tTableIn', 1, 'tTableCardOut', 'pDealerCardIn', 1};... %dealer to table
+         'pDealerOut','tTableIn', 1, 'tTableCardOut', 'pDealerCardIn', 1, ...%dealer to table
+         'tMakeCards','pDeck',1} ;% factory to deck
     pns.set_of_As = [pns.set_of_As As];
 end
 

@@ -24,9 +24,23 @@ global_info.card_dealt_counter = global_info.n_players;
 global_info.cards_dealt_to_table = [0,3,1,1];
 global_info.cards_returned = 0;
 
-global_info.MAX_LOOP = 500;
+global_info.MAX_LOOP = 200;
+global_info.deck = {};
+global_info.cards_set_counter = 1;
+
+types = {'s','k','h','d'};
+values = {'a','2','3','4','5','6','7','8','9','10','j','q','k'};
+for i = 1:4
+    for j = 1:13
+        card = strcat('c',values(j),types(i));
+        %global_info.deck = [global_info.deck, card];
+        global_info.deck = [global_info.deck, card];
+    end;
+end;
+
 player_modules = {'dealer_pdf', 'table_pdf', global_info.players(1).pdf,...
     global_info.players(2).pdf, global_info.players(3).pdf, global_info.players(4).pdf,};
+
 pdfs = {'THE_module_pdf'};
 pdfs = [player_modules pdfs];
 
@@ -44,5 +58,6 @@ pni = initialdynamics(pns, dyn);
 
 sim = gpensim(pni); % perform simulation runs
 
-prnss(sim); % print the simulation results
-plotp(sim, {'pDeck'});
+%prnss(sim); % print the simulation results
+%plotp(sim, {'pDeck'});
+

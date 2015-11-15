@@ -21,7 +21,8 @@ function [] = COMMON_POST(transition)
     end;
     if strcmp(transition.name, 'tToDeck')
         global_info.cards_returned = global_info.cards_returned + 1;
-        if global_info.cards_returned == 13
+        if global_info.cards_returned >= 5 + (global_info.n_players * 2)
+            theprint('###########NEW HAND#########');
             global_info.end_hand = 0;
         end;
     end;
