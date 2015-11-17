@@ -37,7 +37,8 @@ for i = 1:4
         global_info.deck = [global_info.deck, card];
     end;
 end;
-global_info.deck = global_info.deck(randperm(52));
+global_info.new_deck = global_info.deck;
+global_info.shuffled_deck = global_info.new_deck(randperm(52));
 
 player_modules = {'dealer_pdf', 'table_pdf', global_info.players(1).pdf,...
     global_info.players(2).pdf, global_info.players(3).pdf, global_info.players(4).pdf,};

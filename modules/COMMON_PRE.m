@@ -7,16 +7,25 @@ global global_info;
 if strcmp(transition.name, 'tDealer'),
     if and(~global_info.end_hand, isempty(global_info.deck))
         if and(global_info.game_state == 1, global_info.cards_dealt_in_state(1))
+            next_card = global_info.shuffled_deck(1);
+            global_info.shuffled_deck = global_info.shuffled_deck(2:end);
+            tokID = tokenAnyColor('pDeck', 1, next_card);
+            
             global_info.cards_dealt_in_state(global_info.game_state) = global_info.cards_dealt_in_state(global_info.game_state) -1;
             index = mod(global_info.players_index, length(global_info.players))+1;
             global_info.players_index = global_info.players_index + 1;
             transition.new_color = strcat('pp',num2str(index));
-            fire = 1;
+            transition.selected_tokens = tokID;
+            fire = tokID;
             return;
         elseif and(global_info.game_state > 1, global_info.cards_dealt_in_state(global_info.game_state))
             %theprint('Pulling card from deck')
             global_info.cards_dealt_in_state(global_info.game_state) = global_info.cards_dealt_in_state(global_info.game_state) -1;
-            fire = 1;
+            next_card = global_info.shuffled_deck(1);
+            global_info.shuffled_deck = global_info.shuffled_deck(2:end);
+            tokID = tokenAnyColor('pDeck', 1, next_card);
+            transition.selected_tokens = tokID;
+            fire = tokID;
             return;
         end;
     end;
@@ -91,6 +100,7 @@ for player_nr = 1:global_info.n_players
                     global_info.small_blind_player = mod(global_info.small_blind_player,4)+1;
                     global_info.cards_returned = 0;
                     global_info.end_hand = 1;
+                    global_info.shuffled_deck = global_info.new_deck(randperm(52));
                 end;
                 
                 global_info.game_state = mod(global_info.game_state,length(global_info.cards_dealt_in_state))+1;
