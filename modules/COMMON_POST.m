@@ -22,8 +22,9 @@ if strcmp(transition.name, 'tTableIn'),
     end;
 end;
 if strcmp(transition.name, 'tToDeck')
-    global_info.cards_returned = global_info.cards_returned + 1;
-    if global_info.cards_returned >= 5 + (global_info.n_players * 2)
+    cards_in_deck = get_place('pDeck');
+    cards_in_deck = cards_in_deck.tokens;
+    if cards_in_deck >= 51
         theprint('###########NEW HAND#########');
         global_info.player_bets = [0 0 0 0];
         global_info.end_hand = 0;

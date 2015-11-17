@@ -6,6 +6,7 @@ global_info.print_text = 1;
 global_info.players = [basic_player(), basic_player(), basic_player(), basic_player()];
 global_info.players_index = 0;
 global_info.n_players = length(global_info.players);
+global_info.player_chips = zeros(1, global_info.n_players);
 global_info.blinds = [1 2];
 
 %Between rounds
@@ -19,11 +20,13 @@ global_info.min_raise = 0;
 global_info.end_hand = 0;
 global_info.small_blind_player = 1;
 global_info.player_bets = zeros(1, global_info.n_players);
-global_info.cards_dealt_in_state = [8,3,1,1];
+global_info.cards_dealt_in_state = [global_info.n_players * 2,3,1,1];
 global_info.card_dealt_counter = global_info.n_players * 2;
 global_info.cards_dealt_to_table = [0,3,1,1];
 global_info.cards_returned = 0;
 global_info.pot = 0;
+global_info.has_folded = zeros(1, global_info.n_players);
+global_info.has_called = zeros(1, global_info.n_players);
 
 global_info.MAX_LOOP = 200;
 global_info.deck = {};
@@ -50,7 +53,7 @@ pdfs = [player_modules pdfs];
 
 pns = pnstruct(pdfs);
 
-dyn.m0  = {'pDeck',52, strcat('pTableP',num2str(global_info.small_blind_player),'Out'),1};
+dyn.m0  = {strcat('pTableP',num2str(global_info.small_blind_player),'Out'),1};
 %strcat('pTableP',num2str(small_blind_player),'Out')
 %dyn.m0  = {'pTableP1Out',1};
 
