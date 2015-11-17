@@ -1,5 +1,4 @@
 function [ output ] = evaluate_hand( cards )
-cards
 % Returns strength of a hand (output.value)
 % values for output
     %Straight flush 8
