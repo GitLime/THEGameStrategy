@@ -21,7 +21,10 @@ global_info.card_dealt_counter = global_info.n_players;
 global_info.cards_dealt_to_table = [0,3,1,1];
 global_info.cards_returned = 0;
 
-global_info.MAX_LOOP = 200;
+%Player pots
+global_info.player_pots = [5000,5000,5000,5000];
+
+global_info.MAX_LOOP = 2000;
 global_info.deck = {};
 global_info.cards_set_counter = 1;
 
