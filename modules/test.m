@@ -1,4 +1,3 @@
-hand = {'7k', 'as'};
-table = {'ks','js','qs','ts'};
-
-smpl_hand_strength(hand, table)
+a = [1 2 3]
+b = [3 2 0]
+a - b
