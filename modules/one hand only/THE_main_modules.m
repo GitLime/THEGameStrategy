@@ -2,8 +2,8 @@ clear all; clc;
 
 global global_info;
 
-global_info.print_text = 0;
-global_info.players = [basic_player(), basic_player(), basic_player(), basic_player()];
+global_info.print_text = 1;
+global_info.players = [basic_concord_player(), basic_concord_player(), basic_concord_player(), basic_concord_player()];
 global_info.players_index = 0;
 global_info.n_players = length(global_info.players);
 global_info.blinds = [10 20];
@@ -34,7 +34,7 @@ pns = pnstruct(pdfs);
 
 results = [global_info.player_chips];
 
-number_of_simulations = 20;
+number_of_simulations = 5;
 sums = [0];
 sims = 0;
 
@@ -55,7 +55,9 @@ for round = 1:number_of_simulations
 %     big_blid_player = mod(global_info.small_blind_player, global_info.n_players) +1;
 %     global_info.player_bets(big_blid_player) = blids(2);
 %     starting_player = mod(big_blid_player, global_info.n_players) +1;
-    
+    global_info.max_chips_to_play = 500;
+
+
     global_info.cards_dealt_in_state = [global_info.n_players * 2,3,1,1];
     global_info.card_dealt_counter = global_info.n_players * 2;
     global_info.cards_dealt_to_table = [0,3,1,1];

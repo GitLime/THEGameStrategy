@@ -36,11 +36,12 @@ if isempty(table)
         8	9	9	10	9	10	11	12	13	14	15	16	32;];
     
     card_colors = ccards(:,3);
+    theprint(['Cards: ', '[',ccards(1,2:3),'] [' ,ccards(2,2:3),']']);
     if card_colors(1) == card_colors(2);
-        strength = twoCardValues(min(card_values) - 1, max(card_values) - 1);
+        strength = twoCardValues(min(card_values) - 1, max(card_values) - 1)/32;
         return
     end
-    strength = twoCardValues(max(card_values) - 1, min(card_values) - 1);
+    strength = twoCardValues(max(card_values) - 1, min(card_values) - 1)/32;
     return
 end
 
