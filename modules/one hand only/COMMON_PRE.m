@@ -96,7 +96,7 @@ if strcmp(transition.name(1:2), 'tP')
             transition.override = 1;
             transition.new_color = '0';
             return
-        end
+        end;
         
         place = get_place(strcat('pP', num2str(player_nr), 'Cards'));
         banks = place.token_bank;
@@ -147,9 +147,10 @@ if strcmp(transition.name(1:min(end,7)), 'tTableP')
             tokID = tokenAny( pTurnOut,1 );
             color = get_color(pTurnOut,tokID);
             
+            play = global_info.player_bets(player_nr);
             
             if global_info.has_folded(player_nr)
-                global_info.player_bets(player_nr) =  max(global_info.player_bets);
+                %global_info.player_bets(player_nr) =  max(global_info.player_bets);
                 theprint(['    Player' num2str(player_nr) ' has folded']);
                 global_info.nr_of_turns_in_round = global_info.nr_of_turns_in_round + 1;
                 fire = 1;
@@ -157,7 +158,6 @@ if strcmp(transition.name(1:min(end,7)), 'tTableP')
             end
             
             call_amount = max(global_info.player_bets);
-            play = global_info.player_bets(player_nr);
             color = str2double(char(color));
             
             if call_amount == 0 % can check, or bet

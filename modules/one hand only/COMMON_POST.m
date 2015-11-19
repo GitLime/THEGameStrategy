@@ -19,6 +19,14 @@ if strcmp(transition.name(1:2), 'tP')
 end;
 if strcmp(transition.name, 'tTableIn'),
     if and(global_info.game_state > 1, ~global_info.cards_dealt_to_table(global_info.game_state))
+        place = get_place('pTable');
+        banks = place.token_bank;
+        cards = 'Cards on table: ';
+        for i = 1:length(banks)
+            cards = strcat(cards,' [',banks(i).color,']');
+        end;
+
+        theprint(cards);
         theprint('###########Starting new round#########');
         global_info.getting_to_starting_player = 1;
         global_info.player_bets = zeros(1, global_info.n_players);
