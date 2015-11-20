@@ -3,7 +3,7 @@ clear all; clc;
 global global_info;
 
 global_info.print_text = 1;
-global_info.players = [basic_concord_player(), basic_concord_player(), basic_concord_player(), basic_concord_player()];
+global_info.players = [better_odds_player(), basic_expect_player(), basic_expect_player(), basic_expect_player()];
 global_info.players_index = 0;
 global_info.n_players = length(global_info.players);
 global_info.blinds = [10 20];
@@ -34,7 +34,7 @@ pns = pnstruct(pdfs);
 
 results = [global_info.player_chips];
 
-number_of_simulations = 5;
+number_of_simulations = 50;
 sums = [0];
 sims = 0;
 

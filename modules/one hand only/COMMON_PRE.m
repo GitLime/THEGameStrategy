@@ -109,6 +109,7 @@ if strcmp(transition.name(1:2), 'tP')
         for bank = banks
             table = [table bank.color];
         end
+        global_info.call_amount = max(global_info.player_bat) - global_info.player_bat(player_nr);
         color = global_info.players(player_nr).decision(hand,table);
         transition.override = 1;
         transition.new_color = num2str(color);
@@ -192,6 +193,7 @@ if strcmp(transition.name(1:min(end,7)), 'tTableP')
             theprint(['    Player' num2str(player_nr) ' wants to play ' num2str(color)]);
             theprint(['    Player' num2str(player_nr) ' played ' num2str(play) ' (' play_type ')']);
             global_info.nr_of_turns_in_round = global_info.nr_of_turns_in_round + 1;
+            
             if or(strcmp(play_type, 'bet'), strcmp(play_type, 'raise'))
                 global_info.has_called = zeros(1, global_info.n_players);
                 global_info.has_called(player_nr) = 1;
