@@ -1,4 +1,4 @@
-function [play_amount] = basic_expect_decision(hand, table)
+function [play_amount] = basic_expect_decision(hand, table, toCall)
 
 global global_info;
 
@@ -8,23 +8,11 @@ blind = 20;
 strength = smpl_hand_strength(hand, table);
 play_amount = round(strength * blind * 10);
 
-toCall = 0;
 
-for i = 1:global_info.n_players
-    bet = global_info.player_bets(i);
-    if bet > toCall
-        toCall = bet;
-    end;
-end;
-
-pot = global_info.pot + toCall;
+pot = global_info.pot + sum(global_info.player_bets);
 expected_win = strength*pot;
 
-if and(play_amount < toCall, expected_win > toCall)
-    theprint('EXPECTED TO WIN MORE');
-    theprint(expected_win);
-    play_amount = toCall;
-end;
+play_amount = expected_win;
 
 end
 

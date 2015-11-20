@@ -1,4 +1,4 @@
-function strength = smpl_hand_strength(hand, table)
+function strength = hand_strength_consider_table(n_players, hand, table)
 if isempty(table)
     ccards = char(hand);
     ccard_values = ccards(:,2);
@@ -36,16 +36,17 @@ if isempty(table)
         8	9	9	10	9	10	11	12	13	14	15	16	32;];
     
     card_colors = ccards(:,3);
+    theprint(['Cards: ', '[',ccards(1,2:3),'] [' ,ccards(2,2:3),']']);
     if card_colors(1) == card_colors(2);
-        strength = twoCardValues(min(card_values) - 1, max(card_values) - 1);
+        strength = twoCardValues(min(card_values) - 1, max(card_values) - 1)/32;
         return
     end
-    strength = twoCardValues(max(card_values) - 1, min(card_values) - 1);
+    strength = twoCardValues(max(card_values) - 1, min(card_values) - 1)/32;
     return
 end
 
-eval = evaluate_hand_consider_teble(cards, table);
-p_lose_to_1 = eval.get_beaten;
+eval = evaluate_hand_consider_teble(hand, table);
+p_lose_to_1 = eval.p_gets_beaten;
 p_lose = 0;
 for i = 1:n_players
     p_lose = p_lose + (1-p_lose)*p_lose_to_1;
