@@ -13,7 +13,6 @@ function [ winners ] = find_winners( hands, table )
         hand_types = [hand_types eval.value];
         hand_cards = [hand_cards; eval.hand];
     end 
-    hand_cards
     winners = find(hand_types == max(hand_types));
     
     if length(winners) == 1
@@ -31,33 +30,6 @@ function [ winners ] = find_winners( hands, table )
             winners = [winners row];
         end
     end 
-    
     return;
-    
-    
-    
-    winners_eval = containers.Map;
-    for k = strenths.keys
-        if strenths(char(k)).value == m;
-            winners_eval(char(k)) = strenths(char(k));
-        end
-    end 
-    
-    if length(winners_eval.keys) == 1
-        winners = winners_eval.keys;
-        return
-    end
-    
-    f = find(hand_types == m);
-    top_hands = hand_cards(f,:);
-    top_hands = sortrows(top_hands, fliplr(-5:-1));
-    top_hand = top_hands(1,:);
-    
-    winners = [];
-    for k = winners_eval.keys
-        if winners_eval(char(k)).hand == top_hand;
-            winners = [winners k];
-        end
-    end 
 end
 

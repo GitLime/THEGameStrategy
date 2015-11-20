@@ -111,8 +111,8 @@ if strcmp(transition.name(1:2), 'tP')
             table = [table bank.color];
         end
         global_info.call_amount = max(global_info.player_bets) - global_info.player_bets(player_nr);
-        color = global_info.players(player_nr).decision(hand,table,global_info.players(player_nr).parameters);
-        %color = global_info.players(player_nr).decision(hand,table);
+         color = global_info.players(player_nr).decision(hand,table,global_info.players(player_nr).parameters);
+%         color = global_info.players(player_nr).decision(hand,table);
         transition.override = 1;
         transition.new_color = num2str(color);
         fire = 1;

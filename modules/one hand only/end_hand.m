@@ -6,7 +6,7 @@ if sum(global_info.has_folded) == global_info.n_players - 1
     global_info.player_chips(winner) = global_info.player_chips(winner) + global_info.pot;
     theprint(['player ' num2str(winner) ' won ' num2str(global_info.pot)]);
 else
-    not_folded = 1 - global_info.has_folded == 0;
+    not_folded = 1 - global_info.has_folded;
     hands = [];
     for player_nr = 1:global_info.n_players;
         if not_folded(player_nr)

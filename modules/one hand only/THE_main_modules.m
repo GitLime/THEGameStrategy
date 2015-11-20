@@ -2,14 +2,14 @@ clear all; clc;
 
 global global_info;
 global_info.print_text = 1;
-bluf_preictions = [0 0 0 0];
+bluf_preictions = [0 0 1 0];
 bluf_preictions2 = [0 0 0 0];
 
 global_info.players = [basic_concord_player2(0,bluf_preictions),...
     basic_concord_player2(0,bluf_preictions),basic_concord_player2(1,bluf_preictions),basic_concord_player2(0,bluf_preictions)];
 
-global_info.players = [better_odds_player2(0,bluf_preictions),...
-    better_odds_player2(0,bluf_preictions),better_odds_player2(1,bluf_preictions),better_odds_player2(0,bluf_preictions2)];
+global_info.players = [better_odds_player2(0,bluf_preictions2),...
+    better_odds_player2(0,bluf_preictions),better_odds_player2(1,bluf_preictions),better_odds_player2(0,bluf_preictions)];
 global_info.players_index = 0;
 global_info.n_players = length(global_info.players);
 global_info.blinds = [10 20];
