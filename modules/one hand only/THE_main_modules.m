@@ -3,7 +3,7 @@ clear all; clc;
 global global_info;
 
 global_info.print_text = 1;
-global_info.players = [basic_concord_player(), basic_concord_player(), basic_concord_player(), basic_concord_player()];
+global_info.players = [basic_expect_player(), basic_concord_player(), basic_concord_player(), basic_concord_player()];
 global_info.players_index = 0;
 global_info.n_players = length(global_info.players);
 global_info.blinds = [10 20];
@@ -34,7 +34,7 @@ pns = pnstruct(pdfs);
 
 results = [global_info.player_chips];
 
-number_of_simulations = 5;
+number_of_simulations = 20;
 sums = [0];
 sims = 0;
 
@@ -55,7 +55,7 @@ for round = 1:number_of_simulations
 %     big_blid_player = mod(global_info.small_blind_player, global_info.n_players) +1;
 %     global_info.player_bets(big_blid_player) = blids(2);
 %     starting_player = mod(big_blid_player, global_info.n_players) +1;
-    global_info.max_chips_to_play = 500;
+    global_info.max_chips_to_play = 1000;
 
 
     global_info.cards_dealt_in_state = [global_info.n_players * 2,3,1,1];
@@ -65,7 +65,7 @@ for round = 1:number_of_simulations
     global_info.has_folded = zeros(1, global_info.n_players);
     global_info.has_called = zeros(1, global_info.n_players);
     global_info.shuffled_deck = deck(randperm(52));
-    
+    global_info.max_bet = 200;
     d = global_info.shuffled_deck;
     
 %     global_info.shuffled_deck = {'cas' 'c5k' 'cad' 'cah' 'ckk' 'ckd' 'ckh' 'cks' ...
