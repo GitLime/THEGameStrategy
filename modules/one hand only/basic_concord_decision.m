@@ -36,7 +36,8 @@ if play_amount < toCall
     %disp('Initial amount');
     %disp(init_amount);
     players_left = global_info.n_players-hasFolded;
-    pot_size = ((toCall+global_info.pot)/(global_info.max_chips_to_play*players_left));
+    pot = global_info.pot + sum(global_info.player_bets);
+    pot_size = pot/(global_info.max_chips_to_play*global_info.n_players);
     %disp('Willing to call up to');
     buffer = 0.5;
     %disp(round(init_amount*(1+buffer+pot_size)));
@@ -45,6 +46,9 @@ if play_amount < toCall
     end;
 end;
 
+if play_amount > global_info.max_bet
+    play_amount = 400;
+end;
 
 %play_amount = toCall;
 %play_amount = round(strength * blind * 10);
