@@ -4,13 +4,14 @@ global global_info;
 
 global_info.print_text = 1;
 
-global_info.players = [better_odds_player(), basic_expect_player(), basic_expect_player(), basic_expect_player()];
+global_info.players = [basic_player(), basic_player(), basic_player(), basic_player()];
 
 global_info.players_index = 0;
 global_info.n_players = length(global_info.players);
 global_info.blinds = [10 20];
 global_info.player_chips = zeros(1, global_info.n_players);
-
+global_info.winners1=[0,0,0,0];
+global_info.winners2=[0,0,0,0];
 global_info.MAX_LOOP = 200;
 
 deck = {};
@@ -36,7 +37,7 @@ pns = pnstruct(pdfs);
 
 results = [global_info.player_chips];
 
-number_of_simulations = 20;
+number_of_simulations = 30;
 
 sums = [0];
 sims = 0;
@@ -59,7 +60,7 @@ for round = 1:number_of_simulations
 %     global_info.player_bets(big_blid_player) = blids(2);
 %     starting_player = mod(big_blid_player, global_info.n_players) +1;
     global_info.max_chips_to_play = 1000;
-
+    global_info.max_bet = 400;
 
     global_info.cards_dealt_in_state = [global_info.n_players * 2,3,1,1];
     global_info.card_dealt_counter = global_info.n_players * 2;
@@ -87,6 +88,8 @@ for round = 1:number_of_simulations
         %break;
     end 
     disp(global_info.player_chips);
+    disp(global_info.winners1);
+    disp(global_info.winners2);
 end
 % length(results(:,1))
 % plot(0:length(results(:,1)),[results sums]);
