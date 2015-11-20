@@ -1,4 +1,4 @@
-function [play_amount] = basic_expect_decision(hand, table, toCall)
+function [play_amount] = basic_expect_decision(hand, table)
 
 global global_info;
 

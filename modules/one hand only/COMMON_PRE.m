@@ -67,6 +67,7 @@ if strcmp(transition.name(1:2), 'tP')
         fire = (tokID1);
         return;
     elseif strcmp(tName, 'Decision'),
+        global_info.players_turn = player_nr;
         theprint(['Player', num2str(player_nr), ' decision']);
         
         %getting_to_starting_player = global_info.getting_to_starting_player
@@ -109,8 +110,9 @@ if strcmp(transition.name(1:2), 'tP')
         for bank = banks
             table = [table bank.color];
         end
-        global_info.call_amount = max(global_info.player_bat) - global_info.player_bat(player_nr);
-        color = global_info.players(player_nr).decision(hand,table);
+        global_info.call_amount = max(global_info.player_bets) - global_info.player_bets(player_nr);
+        color = global_info.players(player_nr).decision(hand,table,global_info.players(player_nr).parameters);
+        %color = global_info.players(player_nr).decision(hand,table);
         transition.override = 1;
         transition.new_color = num2str(color);
         fire = 1;
