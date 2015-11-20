@@ -1,4 +1,6 @@
-function strength = hand_strength_consider_table(n_players, hand, table)
+function strength = hand_strength_with_reads(hand, table, bluf_predictoins)
+global global_info;
+n_players = length(bluf_predictoins);
 if isempty(table)
     ccards = char(hand);
     ccard_values = ccards(:,2);
@@ -48,8 +50,15 @@ end
 eval = evaluate_hand_consider_teble(hand, table);
 p_lose_to_1 = eval.p_gets_beaten;
 p_lose = 0;
-for i = 1:n_players
-    p_lose = p_lose + (1-p_lose)*p_lose_to_1;
+
+players_to_call = find(global_info.player_bets == max(global_info.player_bets));
+
+for i = players_to_call
+    bluf_predictoin = bluf_predictoins(i);
+    i_bluf_predictoins = 1 - bluf_predictoins(i);
+    strength_prediction = p_lose_to_1 * i_bluf_predictoins+...
+        bluf_predictoin * .5;
+    p_lose = p_lose + (1-p_lose)*strength_prediction;
 end
 p_win = 1 - p_lose;
 strength = p_win;

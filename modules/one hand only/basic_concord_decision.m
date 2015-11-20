@@ -1,11 +1,33 @@
-function [play_amount] = basic_concord_decision(hand, table)
+function [play_amount] = basic_concord_decision(hand, table, params)
 
 global global_info;
+
+p_bluf = params.p_bluf;
+bluf_strength = 0;
+if p_bluf > global_info.blufs_stoc(global_info.players_turn)
+    bluf_hand = {'cqs', 'cks'};
+    bluf_table = {'cqd', 'ckk', 'c2s', 'c6h', 'c9h'};
+    if global_info.game_state == 1
+        bluf_table = {};
+    else
+        bluf_table = bluf_table(1:3+global_info.game_state-2);
+    end 
+    bluf_strength = hand_strength_with_reads(bluf_hand, bluf_table, params.bluf_predictions);
+end
 
 %Will play coresponding to the strength of the current 2 or 5 card hand,
 %disregarding all other info. 
 blind = 20;
-strength = smpl_hand_strength(hand, table);
+strength = max(hand_strength_with_reads(hand, table, params.bluf_predictions), bluf_strength);
+
+% % divide by sum blufs
+% in_game = ones(1, global_info.n_players) - global_info.has_folded;
+% strength = strength / sum(params.bluf_predictions(in_game==1));
+% % multiply by players
+% strength = strength * sum(in_game);
+
+
+
 %if isempty(table)
     %2 card hand
 %   	play_amount = strength * blind*10;

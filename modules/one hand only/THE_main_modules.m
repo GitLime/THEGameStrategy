@@ -1,10 +1,20 @@
 clear all; clc;
 
 global global_info;
-
 global_info.print_text = 1;
 
+
 global_info.players = [basic_player(), basic_player(), basic_player(), basic_player()];
+
+
+bluf_preictions = [0 0 0 0];
+bluf_preictions2 = [0 0 0 0];
+
+global_info.players = [basic_concord_player2(0,bluf_preictions),...
+    basic_concord_player2(0,bluf_preictions),basic_concord_player2(1,bluf_preictions),basic_concord_player2(0,bluf_preictions)];
+
+global_info.players = [better_odds_player2(0,bluf_preictions),...
+    better_odds_player2(0,bluf_preictions),better_odds_player2(1,bluf_preictions),better_odds_player2(0,bluf_preictions2)];
 
 global_info.players_index = 0;
 global_info.n_players = length(global_info.players);
@@ -37,14 +47,16 @@ pns = pnstruct(pdfs);
 
 results = [global_info.player_chips];
 
-number_of_simulations = 30;
 
-sums = [0];
+number_of_simulations = 1000;
+sums = 0;
+
 sims = 0;
 
 for round = 1:number_of_simulations
     sims = sims +1;
     disp(round);
+    global_info.blufs_stoc = rand(1,global_info.n_players);
     global_info.nr_of_turns_in_round = 0;
     global_info.start_round = 0;
     global_info.game_state = 1; % 1: deal cards, 2: flop, 3: turn, 4: river
@@ -69,8 +81,10 @@ for round = 1:number_of_simulations
     global_info.has_folded = zeros(1, global_info.n_players);
     global_info.has_called = zeros(1, global_info.n_players);
     global_info.shuffled_deck = deck(randperm(52));
+
     global_info.max_bet = 200;
     d = global_info.shuffled_deck;
+
     
 %     global_info.shuffled_deck = {'cas' 'c5k' 'cad' 'cah' 'ckk' 'ckd' 'ckh' 'cks' ...
 %         'c2s' 'c3h' 'c4d' 'c7k' 'c7s'};
@@ -88,12 +102,12 @@ for round = 1:number_of_simulations
         %break;
     end 
     disp(global_info.player_chips);
-    disp(global_info.winners1);
-    disp(global_info.winners2);
+    
+plot(0:sims,[results sums]);
 end
 % length(results(:,1))
 % plot(0:length(results(:,1)),[results sums]);
-plot(0:sims,[results sums]);
+%plot(0:sims,[results sums]);
 
 
 
