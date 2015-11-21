@@ -1,34 +1,123 @@
 clear all; clc;
 
 global global_info;
+global_info.print_text = 1;
 
-global_info.players = {'p1','p2','p3','p4'};
+% bluf_preictions = [0 0 1 0];
+%
+% bluf_preictions1 = [0 .5 .2 1];
+% bluf_preictions2 = [1 1 1 1];
+% bluf_preictions3 = [0 0 0 0];
+% bluf_preictions4 = [1 .2 .5 1];
+%
+% global_info.players = [basic_concord_player2(0,bluf_preictions),...
+%     basic_concord_player2(0,bluf_preictions),basic_concord_player2(1,bluf_preictions),basic_concord_player2(0,bluf_preictions)];
+%
+% global_info.players = [better_odds_player2(0,bluf_preictions1),...
+%     better_odds_player2(.5,bluf_preictions2),better_odds_player2(.2,bluf_preictions3),better_odds_player2(1,bluf_preictions4)];
+%global_info.players = [basic_expect_player(),better_odds_player(),basic_expect_player(),basic_expect_player()];
+
+global_info.players = [basic_player(), basic_player(), basic_player(), basic_expect_player()];
 global_info.players_index = 0;
+global_info.n_players = length(global_info.players);
+global_info.blinds = [10 20];
+global_info.player_chips = zeros(1, global_info.n_players);
+global_info.max_bet = 200;
 
-% Decisions : 0: Fold, 1: Check, 2: Call, 3: Bet
-%global_info.player_decision_states = {''}
+global_info.MAX_LOOP = 500;
 
-% Turn phase: 0: First, 1: Flop, 2: Turn, 3: River
-%global_info.turn_number = {0}
+deck = {};
 
-% Player roles: 0: Dealer, 1: Small Blind, 2: Big Blind, 3: Starting player
-%global_info.player_roles = {0,1,2,3}
+%global_info.cards_set_counter = 1;
 
-% Card dealt counter
-global_info.card_dealt_counter = 4;
-% Hand ready to start
-global_info.start_round = 0;
+types = {'s','k','h','d'};
+values = {'a','2','3','4','5','6','7','8','9','t','j','q','k'};
+for i = 1:4
+    for j = 1:13
+        card = strcat('c',values(j),types(i));
+        deck = [deck, card];
+    end;
+end;
+player_modules = {'dealer_pdf', 'table_pdf', global_info.players(1).pdf,...
+    global_info.players(2).pdf, global_info.players(3).pdf, global_info.players(4).pdf,};
 
-global_info.end_hand = 0;
+pdfs = {'THE_pdf'};
+pdfs = [player_modules pdfs];
 
-pns = pnstruct('THE_pdf');
+pns = pnstruct(pdfs);
 
-dyn.m0  = {'pDealer',8, 'pTurn1',1};
+results = [global_info.player_chips];
 
-prnsys(pns, dyn);
+number_of_simulations = 500;
+sums = 0;
+sims = 0;
 
-pni = initialdynamics(pns, dyn);
+winnings = [];
+prevous_winnings = zeros(1,4);
 
-sim = gpensim(pni); % perform simulation runs
+for round = 1:number_of_simulations
+    disp(round);
+    global_info.blufs_stoc = rand(1,global_info.n_players);
+    global_info.nr_of_turns_in_round = 0;
+    global_info.start_round = 0;
+    global_info.game_state = 1; % 1: deal cards, 2: flop, 3: turn, 4: river
+    global_info.min_raise = global_info.blinds(2);
+    global_info.small_blind_player = mod(round, global_info.n_players) +1;
+    global_info.getting_to_starting_player = 1;
+    global_info.end_hand = 0;
+    global_info.end_round = 0;
+    
+    global_info.player_bets = zeros(1, global_info.n_players);
+    %     global_info.player_bets(global_info.small_blind_player) = blids(1);
+    %     big_blid_player = mod(global_info.small_blind_player, global_info.n_players) +1;
+    %     global_info.player_bets(big_blid_player) = blids(2);
+    %     starting_player = mod(big_blid_player, global_info.n_players) +1;
+    global_info.max_chips_to_play = 500;
+    
+    
+    global_info.cards_dealt_in_state = [global_info.n_players * 2,3,1,1];
+    global_info.card_dealt_counter = global_info.n_players * 2;
+    global_info.cards_dealt_to_table = [0,3,1,1];
+    global_info.pot = 0;
+    global_info.has_folded = zeros(1, global_info.n_players);
+    global_info.has_called = zeros(1, global_info.n_players);
+    global_info.shuffled_deck = deck(randperm(52));
+    
+    %     global_info.shuffled_deck = {'cas' 'c5k' 'cad' 'cah' 'ckk' 'ckd' 'ckh' 'cks' ...
+    %         'c2s' 'c3h' 'c4d' 'c7k' 'c7s'};
+    %    global_info.shuffled_deck = {'cjs'    'c5k'    'c6h'    'cas'    'cth'    'c8h'    'ctk'    'c8k'    'c5d'    'c7d'    'c7s'    'c9d'    'c3h'};
+    dyn.m0  = {strcat('pTableP',num2str(global_info.small_blind_player),'Out'),1};
+    prnsys(pns, dyn);
+    pni = initialdynamics(pns, dyn);
+    sim = gpensim(pni); % perform simulation runs
+    %prnss(sim); % print the simulation results
+    %plotp(sim, {'pDeck'});
+    results = [results; global_info.player_chips];
+    
+    winnings = [winnings; (global_info.player_chips - prevous_winnings)];
+    
+    prevous_winnings = global_info.player_chips;
+    sums = [sums; sum(global_info.player_chips)];
+    if sum(global_info.player_chips) ~= 0
+        sum(global_info.player_chips)
+        %break;
+    end
+    disp(global_info.player_chips);
+    disp(['round ' num2str(round) ' over']);
+    
+    
+    sims = sims +1;
+    plot(0:sims,[results]);
+end
 
-prnss(sim); % print the simulation results
+plot(0:sims,[results]);
+%title('One basic player up against three primitive players')
+player_legend = [];
+for i = 1:length(global_info.players)
+    player = global_info.players(i);
+    player_legend = [player_legend; {['player ' num2str(i) ': ' player.name]}];
+end
+legend(player_legend, 'Location','southwest');
+xlabel('round');
+ylabel('player chips');
+
