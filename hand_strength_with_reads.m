@@ -52,7 +52,7 @@ p_lose = 0;
 
 players_to_call = global_info.player_bets == max(global_info.player_bets);
 players_to_call(global_info.player_nr) = 0;
-players_to_call = find(players_to_call)
+players_to_call = find(players_to_call);
 
 for i = players_to_call
     bluf_predictoin = bluf_predictoins(i);

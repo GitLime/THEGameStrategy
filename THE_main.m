@@ -1,7 +1,7 @@
 clear all; clc;
 
 global global_info;
-global_info.print_text = 1;
+global_info.print_text = 0;
 
 bluf_preictions = [0 0 0 0];
 %
