@@ -1,7 +1,7 @@
 clear all; clc;
 
 global global_info;
-global_info.print_text = 1;
+global_info.print_text = 0;
 
 % bluf_preictions = [0 0 1 0];
 %
@@ -17,14 +17,14 @@ global_info.print_text = 1;
 %     better_odds_player2(.5,bluf_preictions2),better_odds_player2(.2,bluf_preictions3),better_odds_player2(1,bluf_preictions4)];
 %global_info.players = [basic_expect_player(),better_odds_player(),basic_expect_player(),basic_expect_player()];
 
-global_info.players = [basic_player(), basic_player(), basic_player(), basic_expect_player()];
+global_info.players = [basic_concord_player(), basic_player(), basic_player(), basic_player()];
 global_info.players_index = 0;
 global_info.n_players = length(global_info.players);
 global_info.blinds = [10 20];
 global_info.player_chips = zeros(1, global_info.n_players);
 global_info.max_bet = 200;
 
-global_info.MAX_LOOP = 500;
+global_info.MAX_LOOP = 200;
 
 deck = {};
 
@@ -39,7 +39,7 @@ for i = 1:4
     end;
 end;
 player_modules = {'dealer_pdf', 'table_pdf', global_info.players(1).pdf,...
-    global_info.players(2).pdf, global_info.players(3).pdf, global_info.players(4).pdf,};
+    global_info.players(2).pdf, global_info.players(3).pdf, global_info.players(4).pdf};
 
 pdfs = {'THE_pdf'};
 pdfs = [player_modules pdfs];
@@ -53,7 +53,7 @@ sums = 0;
 sims = 0;
 
 winnings = [];
-prevous_winnings = zeros(1,4);
+prevous_winnings = zeros(1,length(global_info.players));
 
 for round = 1:number_of_simulations
     disp(round);
@@ -72,7 +72,7 @@ for round = 1:number_of_simulations
     %     big_blid_player = mod(global_info.small_blind_player, global_info.n_players) +1;
     %     global_info.player_bets(big_blid_player) = blids(2);
     %     starting_player = mod(big_blid_player, global_info.n_players) +1;
-    global_info.max_chips_to_play = 500;
+    %global_info.max_chips_to_play = 500;
     
     
     global_info.cards_dealt_in_state = [global_info.n_players * 2,3,1,1];

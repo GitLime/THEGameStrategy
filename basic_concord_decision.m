@@ -36,15 +36,11 @@ if play_amount < toCall
     %disp('Initial amount');
     %disp(init_amount);
     players_left = global_info.n_players-hasFolded;
-<<<<<<< HEAD:modules/one hand only/basic_concord_decision.m
-    pot = global_info.pot + sum(global_info.player_bets);
-    pot_size = pot/(global_info.max_chips_to_play*global_info.n_players);
-=======
+
     pot_size = ((toCall+global_info.pot)/(global_info.max_bet*5*players_left));
->>>>>>> 77b1d0b88b92c078e3c8f862f8ffdc1271f4790c:basic_concord_decision.m
-    %disp('Willing to call up to');
+
     buffer = 0.5;
-    %disp(round(init_amount*(1+buffer+pot_size)));
+    %Willing to call up to
     if round(init_amount*(1+buffer+pot_size)) >= toCall
             play_amount = toCall;
     end;
