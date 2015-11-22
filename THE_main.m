@@ -1,13 +1,13 @@
 clear all; clc;
 
 global global_info;
-global_info.print_text = 0;
+global_info.print_text = 1;
 
 bluf_preictions = [0 0 0 0];
 %
-% bluf_preictions1 = [0 .5 .2 1];
-% bluf_preictions2 = [1 1 1 1];
-% bluf_preictions3 = [0 0 0 0];
+ bluf_preictions1 = [0 .5 .2 1];
+ bluf_preictions2 = [0 0 0 1 0 0 0 0];
+ bluf_preictions3 = [0 0 0 0 0 0 0 0];
 % bluf_preictions4 = [1 .2 .5 1];
 %
 %global_info.players = [bluffing_player(0,bluf_preictions),...
@@ -18,7 +18,8 @@ bluf_preictions = [0 0 0 0];
 %global_info.players = [basic_expect_player(),better_odds_player(),basic_expect_player(),basic_expect_player()];
 
 
-global_info.players = [basic_concord_player(), basic_player(), basic_player(), basic_player()];
+global_info.players = [bluffing_player(0.2,bluf_preictions2),  better_odds_player(), basic_player(), bluffing_player(1,bluf_preictions3), ...
+    basic_expect_player(), better_odds_player(), basic_concord_player(), primitive_player()];
 
 global_info.players_index = 0;
 global_info.n_players = length(global_info.players);
@@ -26,7 +27,7 @@ global_info.blinds = [10 20];
 global_info.player_chips = zeros(1, global_info.n_players);
 global_info.max_bet = 200;
 
-global_info.MAX_LOOP = 200;
+global_info.MAX_LOOP = 500;
 
 deck = {};
 
@@ -41,7 +42,8 @@ for i = 1:4
     end;
 end;
 player_modules = {'dealer_pdf', 'table_pdf', global_info.players(1).pdf,...
-    global_info.players(2).pdf, global_info.players(3).pdf, global_info.players(4).pdf};
+    global_info.players(2).pdf, global_info.players(3).pdf, global_info.players(4).pdf, global_info.players(5).pdf, global_info.players(6).pdf...
+    , global_info.players(7).pdf, global_info.players(8).pdf};
 
 pdfs = {'THE_pdf'};
 pdfs = [player_modules pdfs];
@@ -50,7 +52,7 @@ pns = pnstruct(pdfs);
 
 results = [global_info.player_chips];
 
-number_of_simulations = 500;
+number_of_simulations = 1000;
 sums = 0;
 sims = 0;
 
