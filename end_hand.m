@@ -20,8 +20,6 @@ else
         hands = [hands; hand];
     end
     
-    global_info.hands = hands;
-    
     place = get_place(strcat('pTable'));
     banks = place.token_bank;
     table = [banks(1).color banks(2).color banks(3).color banks(4).color banks(5).color];
