@@ -1,6 +1,6 @@
 function [play_amount] = primitive_decision(hand, table, player_params)
-%Will play coresponding to the its odds of winning calculated based on 
-%numbr of players left in hand
+%Will play corresponding to the its odds of winning calculated based on 
+%number of players left in hand
 
 global global_info
 
