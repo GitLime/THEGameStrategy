@@ -1,7 +1,7 @@
 clear all; clc;
 
 global global_info;
-global_info.print_text = 1;
+global_info.print_text = 0;
 
 bluf_preictions = [0 0 0 0];
 %
@@ -10,8 +10,13 @@ bluf_preictions = [0 0 0 0];
  bluf_preictions3 = [0 0 0 0 0 0 0 0];
 % bluf_preictions4 = [1 .2 .5 1];
 %
+<<<<<<< HEAD
 %global_info.players = [bluffing_player(0,bluf_preictions),...
 %    bluffing_player(1,bluf_preictions),bluffing_player(0,bluf_preictions),bluffing_player(0,bluf_preictions)];
+=======
+global_info.players = [bluffing_player(0,bluf_preictions),...
+    bluffing_player(.4,bluf_preictions),bluffing_player(0,bluf_preictions),bluffing_player(0,bluf_preictions)];
+>>>>>>> 215720979d8dd957fa9e7a67be6d68c870995d31
 %
 % global_info.players = [better_odds_player2(0,bluf_preictions1),...
 %     better_odds_player2(.5,bluf_preictions2),better_odds_player2(.2,bluf_preictions3),better_odds_player2(1,bluf_preictions4)];
