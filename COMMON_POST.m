@@ -17,6 +17,8 @@ if strcmp(transition.name(1:2), 'tP')
         end;
     end;
 end;
+
+%Checking if table has received its cards
 if strcmp(transition.name, 'tTableIn'),
     if and(global_info.game_state > 1, ~global_info.cards_dealt_to_table(global_info.game_state))
         place = get_place('pTable');

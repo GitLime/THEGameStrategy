@@ -4,10 +4,6 @@ global global_info;
 
 pns.PN_name = 'Texas Hold Em';
 
-%decisionTransitions = {'tDecision1', 'tDecision2', 'tDecision3', 'tDecision4'}
-%roundPlaces = {'pTurn1','pTurn2','pTurn3','pTurn4'}
-%pns.set_of_Ts = {'tDealer_cards', 'tP1', 'tP2','tP3','tP4'}
-
 pns.set_of_As = {'pDealerOut', 'tTableIn', 1};
 pns.set_of_Ps = {};
 pns.set_of_Ts = {};
@@ -22,5 +18,3 @@ for i = 1:n_players
          strcat('tTableP', num2str(player), 'In'), 1}; %player to table
     pns.set_of_As = [pns.set_of_As As];
 end
-
-%disp(pns.set_of_As)

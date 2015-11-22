@@ -1,15 +1,12 @@
 function [fire, transition] = COMMON_PRE(transition)
 global global_info;
 
-%theprint(transition.name);
-
 %From dealer to players or table
 if strcmp(transition.name, 'tDealer'),
     fire = 0;
     if ~global_info.end_hand
         %deal cards to players
         if global_info.cards_dealt_in_state(global_info.game_state)
-            %theprint('dealing cards');
             transition.new_color = global_info.shuffled_deck(1);
             global_info.shuffled_deck = global_info.shuffled_deck(2:end);
             global_info.cards_dealt_in_state(global_info.game_state) = global_info.cards_dealt_in_state(global_info.game_state) -1;
@@ -26,9 +23,7 @@ if strcmp(transition.name, 'tDealer'),
     return;
 end;
 
-%State is the current player pot, if all over 0 and equal, round end.
 %Player turn Decision to tTabIn
-
 if strcmp(transition.name(1:2), 'tP')
     player_nr = str2double(transition.name(3));
     tName = transition.name(4:end);
@@ -70,13 +65,11 @@ if strcmp(transition.name(1:2), 'tP')
         global_info.players_turn = player_nr;
         theprint(['Player', num2str(player_nr), ' decision']);
         
-        %getting_to_starting_player = global_info.getting_to_starting_player
         if and(and(player_nr == global_info.small_blind_player, global_info.game_state ~= 1), global_info.getting_to_starting_player)
             global_info.getting_to_starting_player = 0;
         end
         
         if global_info.getting_to_starting_player
-            %play blinds?
             if global_info.game_state == 1
                 if player_nr == global_info.small_blind_player;
                     transition.new_color = num2str(global_info.blinds(1));
@@ -105,7 +98,7 @@ if strcmp(transition.name(1:2), 'tP')
         
         table = [];
         place = get_place('pTable');
-        %global_info.place = place;
+
         banks = place.token_bank;
         for bank = banks
             table = [table bank.color];
@@ -113,7 +106,7 @@ if strcmp(transition.name(1:2), 'tP')
         global_info.player_nr = player_nr;
         global_info.call_amount = max(global_info.player_bets) - global_info.player_bets(player_nr);
          color = global_info.players(player_nr).decision(hand,table,global_info.players(player_nr).parameters);
-%         color = global_info.players(player_nr).decision(hand,table);
+
         transition.override = 1;
         transition.new_color = num2str(color);
         fire = 1;
@@ -154,7 +147,6 @@ if strcmp(transition.name(1:min(end,7)), 'tTableP')
             play = global_info.player_bets(player_nr);
             
             if global_info.has_folded(player_nr)
-                %global_info.player_bets(player_nr) =  max(global_info.player_bets);
                 theprint(['    Player' num2str(player_nr) ' has folded']);
                 global_info.nr_of_turns_in_round = global_info.nr_of_turns_in_round + 1;
                 fire = 1;
@@ -207,8 +199,8 @@ if strcmp(transition.name(1:min(end,7)), 'tTableP')
             elseif and(or(strcmp(play_type, 'check'), strcmp(play_type, 'call')), ~global_info.getting_to_starting_player);
                 global_info.has_called(player_nr) = 1;
             end
-            %check if round is over
             
+            %check if round is over
             if sum(or(global_info.has_called, global_info.has_folded)) == global_info.n_players;
                 theprint('###########Ending round###########')
                 global_info.pot = global_info.pot + sum(global_info.player_bets);
@@ -239,6 +231,5 @@ if strcmp(transition.name(1:min(end,7)), 'tTableP')
         end
     end
 end
-    
-%transition.selected_tokens = tokID1;
+
 fire = 1;
