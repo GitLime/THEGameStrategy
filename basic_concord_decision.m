@@ -17,6 +17,7 @@ play_amount = round(strength * blind * 10);
 if play_amount < toCall
     init_amount = play_amount;
     players_left = global_info.n_players-hasFolded;
+
     pot_size = ((toCall+global_info.pot)/(global_info.max_bet*5*players_left));
     buffer = 0.5;
     if round(init_amount*(1+buffer+pot_size)) >= toCall

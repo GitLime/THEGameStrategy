@@ -6,9 +6,6 @@ function [pns] = player_pdf()
     global_info.players_index = global_info.players_index + 1;
     %we name all Ps and Ts with the player number
     
-    %tP1TurnIn
-    %pP1TurnOut
-    
     
     pns.set_of_Ps = {strcat('pP', num2str(player_nr), 'Cards'), ...
         strcat('pP', num2str(player_nr), 'TurnOut'), ...
