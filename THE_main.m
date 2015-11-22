@@ -3,21 +3,23 @@ clear all; clc;
 global global_info;
 global_info.print_text = 0;
 
-% bluf_preictions = [0 0 1 0];
+bluf_preictions = [0 0 0 0];
 %
 % bluf_preictions1 = [0 .5 .2 1];
 % bluf_preictions2 = [1 1 1 1];
 % bluf_preictions3 = [0 0 0 0];
 % bluf_preictions4 = [1 .2 .5 1];
 %
-% global_info.players = [basic_concord_player2(0,bluf_preictions),...
-%     basic_concord_player2(0,bluf_preictions),basic_concord_player2(1,bluf_preictions),basic_concord_player2(0,bluf_preictions)];
+%global_info.players = [bluffing_player(0,bluf_preictions),...
+%    bluffing_player(1,bluf_preictions),bluffing_player(0,bluf_preictions),bluffing_player(0,bluf_preictions)];
 %
 % global_info.players = [better_odds_player2(0,bluf_preictions1),...
 %     better_odds_player2(.5,bluf_preictions2),better_odds_player2(.2,bluf_preictions3),better_odds_player2(1,bluf_preictions4)];
 %global_info.players = [basic_expect_player(),better_odds_player(),basic_expect_player(),basic_expect_player()];
 
+
 global_info.players = [basic_concord_player(), basic_player(), basic_player(), basic_player()];
+
 global_info.players_index = 0;
 global_info.n_players = length(global_info.players);
 global_info.blinds = [10 20];
@@ -57,7 +59,7 @@ prevous_winnings = zeros(1,length(global_info.players));
 
 for round = 1:number_of_simulations
     disp(round);
-    global_info.blufs_stoc = rand(1,global_info.n_players);
+    global_info.bluffs_stoc = rand(1,global_info.n_players);
     global_info.nr_of_turns_in_round = 0;
     global_info.start_round = 0;
     global_info.game_state = 1; % 1: deal cards, 2: flop, 3: turn, 4: river

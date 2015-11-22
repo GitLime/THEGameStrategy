@@ -48,7 +48,7 @@ end
 eval = evaluate_hand_consider_teble(hand, table);
 p_lose_to_1 = eval.p_gets_beaten;
 p_lose = 0;
-for i = 1:n_players
+for i = 1:(n_players-1)
     p_lose = p_lose + (1-p_lose)*p_lose_to_1;
 end
 p_win = 1 - p_lose;
